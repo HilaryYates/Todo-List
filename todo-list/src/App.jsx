@@ -54,26 +54,27 @@ function App() {
               return <Todo title={todo} />;
             }
           })}
-          <input
-            autoFocus='autofocus'
-            maxlength='22'
-            value={newTodo}
-            onChange={(e) => setNewTodo(e.target.value)}
-            className='mx-9 bg-transparent border-b-[.5px] border-slate-500 focus-visible:outline-none text-sm'
-          />
+          {todoList.length < 11 ? (
+            <input
+              autoFocus='autofocus'
+              maxlength='22'
+              value={newTodo}
+              onChange={(e) => setNewTodo(e.target.value)}
+              className='mx-9 bg-transparent border-b-[.5px] border-slate-500 focus-visible:outline-none text-sm'
+            />
+          ) : null}
         </div>
         <div className='absolute -bottom-6 flex justify-center w-full'>
           <button
             onClick={() => {
               const newList = [...todoList];
               newList.push(newTodo);
-              if (newList.length <= 11) {
-                setTodoList(newList);
-                setNewTodo("");
-              } else {
-                alert("List is full.");
-                console.log(confirm);
-              }
+              // if (newList.length <= 11) {
+              setTodoList(newList);
+              setNewTodo("");
+              // } else {
+              // alert("List is full.");
+              // console.log(confirm);
             }}
             className='h-60 w-60 text-center rounded-100 text-35 font-medium pb-60 bg-enter text-plus focus-visible:outline-none '
           >
