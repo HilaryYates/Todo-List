@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { BsFillCheckCircleFill, BsCheckLg } from "react-icons/bs";
 
 const Todo = ({ title }) => {
   const [checked, setChecked] = useState(false);
+  const [hover, setHover] = useState(false);
   const inputRef = useRef();
   const handleClick = () => {
     if (inputRef.current) {
@@ -16,10 +16,13 @@ const Todo = ({ title }) => {
       className='flex justify-between mx-9 item-center'
       onClick={handleClick}
     >
-      <p className='mb-2 text-sm'>{title}</p>
-      <div className='flex item-center mt-1'>
-        {checked ? <BsFillCheckCircleFill /> : <BsCheckLg />}
-        {/* {todoList.length === 2 ? alert("yes") : alert("no")} */}
+      <p className='mb-2 text-[16px]'>{title}</p>
+      <div
+        className='flex item-center mt-1'
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        {hover ? <BsFillCheckCircleFill /> : <BsCheckLg />}
       </div>
       <input
         ref={inputRef}
@@ -56,25 +59,30 @@ function App() {
           })}
           {todoList.length < 11 ? (
             <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  const newList = [...todoList];
+                  newList.push(newTodo);
+                  setTodoList(newList);
+                  setNewTodo("");
+                }
+              }}
               autoFocus='autofocus'
               maxlength='22'
               value={newTodo}
               onChange={(e) => setNewTodo(e.target.value)}
-              className='mx-9 bg-transparent border-b-[.5px] border-slate-500 focus-visible:outline-none text-sm'
+              className='border-b-2 border-bg-enter mx-9 bg-transparent focus-visible:outline-none text-sm'
             />
           ) : null}
         </div>
         <div className='absolute -bottom-6 flex justify-center w-full'>
           <button
+            tabIndex={0}
             onClick={() => {
               const newList = [...todoList];
               newList.push(newTodo);
-              // if (newList.length <= 11) {
               setTodoList(newList);
               setNewTodo("");
-              // } else {
-              // alert("List is full.");
-              // console.log(confirm);
             }}
             className='h-60 w-60 text-center rounded-100 text-35 font-medium pb-60 bg-enter text-plus focus-visible:outline-none '
           >
@@ -84,17 +92,6 @@ function App() {
       </div>
     </div>
   );
-
-  //   <div className='bg-orange-400 h-10'>nav</div>
-  //   <div className='bg-orange-300 h-20'>header</div>
-  //   <div className='bg-orange-50 h-40'>content</div>
-  //   <div className='bg-orange-100 h-20'>sign up</div>
-  //   <div className='flex flex-col sm:flex-row'>
-  //     <div className='bg-amber-400 flex-grow text-center h-20'>feature</div>
-  //     <div className='bg-amber-300 flex-grow text-center h-20 '>feature</div>
-  //     <div className='bg-amber-100 flex-grow text-center h-20'>feature</div>
-  //   </div>
-  // </div>
 }
 
 export default App;
