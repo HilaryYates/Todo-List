@@ -16,7 +16,7 @@ const Todo = ({ title }) => {
       className='flex justify-between mx-9 item-center'
       onClick={handleClick}
     >
-      <p className='mb-2 text-[16px]'>{title}</p>
+      <p className='mb-2 text-[14px]'>{title}</p>
       <div
         className='flex item-center mt-1'
         onMouseEnter={() => setHover(true)}
@@ -71,7 +71,7 @@ function App() {
               maxlength='22'
               value={newTodo}
               onChange={(e) => setNewTodo(e.target.value)}
-              className='border-b-2 border-bg-enter mx-9 bg-transparent focus-visible:outline-none text-sm'
+              className='mx-9 bg-transparent focus-visible:outline-none text-sm'
             />
           ) : null}
         </div>
