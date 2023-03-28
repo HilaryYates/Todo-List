@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { BsFillCheckCircleFill, BsCheckLg } from "react-icons/bs";
+import axios from "axios";
 
 const Todo = ({ title }) => {
   const [checked, setChecked] = useState(false);
@@ -38,6 +39,15 @@ function App() {
   const [todoList, setTodoList] = useState([]);
   const [newTodo, setNewTodo] = useState("");
 
+  const fetchTodos = async () => {
+    const res = axios.get("http/localhost:5000");
+    setTodoList(res.data);
+  };
+
+  useEffect(() => {
+    fetchTodos();
+  });
+
   return (
     <div className='bg-background h-screen w-screen pt-7.5'>
       <div className='bg-white w-300 h-510 mx-auto relative'>
@@ -54,7 +64,7 @@ function App() {
         <div>
           {todoList.map((todo) => {
             if (todo.length !== 0) {
-              return <Todo title={todo} />;
+              return <Todo title={todo.title} />;
             }
           })}
           {todoList.length < 11 ? (
@@ -68,7 +78,7 @@ function App() {
                 }
               }}
               autoFocus='autofocus'
-              maxlength='22'
+              maxLength='22'
               value={newTodo}
               onChange={(e) => setNewTodo(e.target.value)}
               className='mx-9 bg-transparent focus-visible:outline-none text-sm'
