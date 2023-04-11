@@ -14,19 +14,12 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/", async (req, res) => {
-  const title = await req.body;
+  const title = await req.body.title;
   const newTodo = await prisma.todo.create({
     data: { title },
   });
   res.send(newTodo);
 });
-
-// app.get("/:id", async (req, res) => {
-//   const Todo = await prisma.todo.findUnique({
-//     where: { id: Number(req.params.id) },
-//   });
-//   res.send(Todo);
-// });
 
 app.delete("/:id", async (req, res) => {
   const deleteTodo = await prisma.todo.delete({
@@ -34,24 +27,6 @@ app.delete("/:id", async (req, res) => {
   });
   res.send(deleteTodo);
 });
-
-// app.post("/:id", async (req, res) => {
-//   const updateTitle = req.body.title;
-//   const updateTodo = await prisma.todo.update({
-//     where: { id: Number(req.params.id) },
-//     data: { title: updateTitle },
-//   });
-//   res.send(updateTodo);
-// });
-
-// app.post("/completed/:id", async (req, res) => {
-//   const completed = req.body.completed;
-//   const updateTodo = await prisma.todo.update({
-//     where: { id: Number(req.params.id) },
-//     data: { completed: completed },
-//   });
-//   res.send(updateTodo);
-// });
 
 app.listen(5000, () => {
   console.log(`Server is running on ${PORT}`);
